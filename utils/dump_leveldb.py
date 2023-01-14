@@ -25,8 +25,6 @@ SOFTWARE.
 from pathlib import Path
 
 import argparse
-import pyfiglet
-import pyfiglet.fonts
 
 import shared
 
@@ -63,8 +61,6 @@ def parse_cmdline():
     return args
 
 def cli():
-    header = pyfiglet.figlet_format("Forensics.im Dump Tool")
-    print(header)
     args = parse_cmdline()
     run(args)
 
