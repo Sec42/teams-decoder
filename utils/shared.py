@@ -28,7 +28,7 @@ import os
 
 from ccl_chrome_indexeddb import ccl_blink_value_deserializer, ccl_chromium_indexeddb, ccl_v8_value_deserializer, \
     ccl_leveldb, ccl_chromium_localstorage, ccl_chromium_sessionstorage
-from ccl_chrome_indexeddb.ccl_chromium_indexeddb import DatabaseMetadataType, ObjectStoreMetadataType
+from ccl_chrome_indexeddb.ccl_chromium_indexeddb import DatabaseMetadataType, ObjectStoreMetadataType, IdbKey
 
 TEAMS_DB_OBJECT_STORES = ['replychains', 'conversations', 'people', 'buddylist']
 
@@ -157,7 +157,8 @@ class FastIndexedDB:
                                 deserializer = ccl_v8_value_deserializer.Deserializer(
                                     obj_raw, host_object_delegate=blink_deserializer.read)
                                 value = deserializer.read()
-                                yield {'key': record.key, 'value': value, 'origin_file': record.origin_file,
+                                newkey=IdbKey(record.key[4:])
+                                yield {'key': newkey, 'value': value, 'origin_file': record.origin_file,
                                        'store': datastore, 'state': record.state, 'seq': record.seq}
                             except Exception as e:
                                 # TODO Some proper error handling wouldn't hurt
