@@ -314,7 +314,7 @@ class Deserializer:
         # I think this can be used to store raw 8-bit data, so return ascii if we can, otherwise bytes
         raw = self._read_raw(length)  # .decode("ascii")
         try:
-            result = raw.decode("ascii")
+            result = raw.decode("iso8859-1")
         except UnicodeDecodeError:
             result = raw
         return result
